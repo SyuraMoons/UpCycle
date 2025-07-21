@@ -18,8 +18,8 @@ export default function BottomNavbar() {
         <Text style={styles.navLabel}>Cart</Text>
       </View>
       <View style={styles.navItem}>
-        <Feather name="heart" size={28} color="#6B7280" />
-        <Text style={styles.navLabel}>Saved</Text>
+        <Ionicons name="chatbubble-outline" size={28} color="#6B7280" />
+        <Text style={styles.navLabel}>Messages</Text>
       </View>
       <View style={styles.navItem}>
         <Ionicons name="person-outline" size={28} color="#6B7280" />
