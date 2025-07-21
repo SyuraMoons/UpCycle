@@ -9,7 +9,7 @@ const bannerHeight = Math.round(bannerWidth * 0.48); // ~16:7 aspect ratio for a
 const Banner = () => (
   <View style={styles.container}>
     <Image
-      source={require('../../assets/images/Banner.png')}
+      source={require('../../../assets/images/Banner.png')}
       style={styles.bannerImage}
       resizeMode="cover"
     />

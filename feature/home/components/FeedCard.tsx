@@ -74,7 +74,7 @@ const GARBAGE_TYPES = [
 
 const sampleData: FeedCardProps[] = [
   {
-    image: require('../../assets/images/partial-react-logo.png'),
+    image: require('../../../assets/images/partial-react-logo.png'),
     title: 'Botol Plastik',
     rating: 4,
     ratingCount: 15,
@@ -86,7 +86,7 @@ const sampleData: FeedCardProps[] = [
     type: 'Plastik',
   },
   {
-    image: require('../../assets/images/partial-react-logo.png'),
+    image: require('../../../assets/images/partial-react-logo.png'),
     title: 'Botol Kaca',
     rating: 5,
     ratingCount: 8,
@@ -98,7 +98,7 @@ const sampleData: FeedCardProps[] = [
     type: 'Kaca',
   },
   {
-    image: require('../../assets/images/partial-react-logo.png'),
+    image: require('../../../assets/images/partial-react-logo.png'),
     title: 'Kardus Bekas',
     rating: 3,
     ratingCount: 22,
@@ -110,7 +110,7 @@ const sampleData: FeedCardProps[] = [
     type: 'Kertas',
   },
   {
-    image: require('../../assets/images/partial-react-logo.png'),
+    image: require('../../../assets/images/partial-react-logo.png'),
     title: 'Kayu Palet',
     rating: 4,
     ratingCount: 10,
@@ -122,7 +122,7 @@ const sampleData: FeedCardProps[] = [
     type: 'Kayu',
   },
   {
-    image: require('../../assets/images/partial-react-logo.png'),
+    image: require('../../../assets/images/partial-react-logo.png'),
     title: 'Kaleng Besi',
     rating: 4,
     ratingCount: 12,
@@ -134,7 +134,7 @@ const sampleData: FeedCardProps[] = [
     type: 'Besi',
   },
   {
-    image: require('../../assets/images/partial-react-logo.png'),
+    image: require('../../../assets/images/partial-react-logo.png'),
     title: 'Kulkas Rusak',
     rating: 5,
     ratingCount: 3,
@@ -146,7 +146,7 @@ const sampleData: FeedCardProps[] = [
     type: 'Elektronik',
   },
   {
-    image: require('../../assets/images/partial-react-logo.png'),
+    image: require('../../../assets/images/partial-react-logo.png'),
     title: 'Sampah Organik',
     rating: 4,
     ratingCount: 7,
@@ -158,7 +158,7 @@ const sampleData: FeedCardProps[] = [
     type: 'Organik',
   },
   {
-    image: require('../../assets/images/partial-react-logo.png'),
+    image: require('../../../assets/images/partial-react-logo.png'),
     title: 'Barang Campuran',
     rating: 3,
     ratingCount: 5,
@@ -171,7 +171,7 @@ const sampleData: FeedCardProps[] = [
   },
   // More cards for variety
   {
-    image: require('../../assets/images/partial-react-logo.png'),
+    image: require('../../../assets/images/partial-react-logo.png'),
     title: 'Botol Plastik',
     rating: 4,
     ratingCount: 15,
@@ -184,7 +184,11 @@ const sampleData: FeedCardProps[] = [
   },
 ];
 
-const FeedCardList: React.FC = () => {
+interface FeedCardListProps {
+  ListHeaderComponent?: React.ReactElement;
+}
+
+const FeedCardList: React.FC<FeedCardListProps> = ({ ListHeaderComponent }) => {
   const [selectedType, setSelectedType] = useState('Semua');
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [showAll, setShowAll] = useState(false);
@@ -208,65 +212,72 @@ const FeedCardList: React.FC = () => {
   };
 
   return (
-    <View style={{ paddingHorizontal: 20, marginTop: 8 }}>
-      <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#222', marginBottom: 8 }}>Sampah</Text>
-      <TouchableOpacity
-        style={{ alignSelf: 'flex-start', backgroundColor: '#E6F4EA', borderRadius: 16, paddingHorizontal: 16, paddingVertical: 6, marginBottom: 12, flexDirection: 'row', alignItems: 'center' }}
-        onPress={() => setDropdownVisible(true)}
-        activeOpacity={0.7}
-      >
-        <Text style={{ color: '#295C3D', fontWeight: 'bold', fontSize: 16 }}>{selectedType}</Text>
-        <Feather name="chevron-down" size={18} color="#295C3D" style={{ marginLeft: 4 }} />
-      </TouchableOpacity>
-      <Modal
-        visible={dropdownVisible}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setDropdownVisible(false)}
-      >
-        <Pressable style={styles.modalOverlay} onPress={() => setDropdownVisible(false)}>
-          <View style={styles.dropdownMenu}>
-            {GARBAGE_TYPES.map((type) => (
-              <TouchableOpacity
-                key={type}
-                style={styles.dropdownItem}
-                onPress={() => handleSelectType(type)}
-                activeOpacity={0.7}
-              >
-                <Text style={{ color: '#295C3D', fontSize: 16 }}>{type}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </Pressable>
-      </Modal>
-      <FlatList
-        data={displayData}
-        renderItem={({ item }) => <FeedCard {...item} />}
-        keyExtractor={(_, idx) => idx.toString()}
-        numColumns={2}
-        columnWrapperStyle={{ justifyContent: 'space-between' }}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: (showTampilkanSemuaButton || showTampilkanSedikitButton) ? 8 : 0 }}
-      />
-      {showTampilkanSemuaButton && (
-        <TouchableOpacity
-          style={styles.simpleLinkButton}
-          onPress={() => setShowAll(true)}
-          activeOpacity={0.6}
-        >
-          <Text style={styles.simpleLinkText}>Tampilkan Semua</Text>
-        </TouchableOpacity>
-      )}
-      {showTampilkanSedikitButton && (
-        <TouchableOpacity
-          style={styles.simpleLinkButton}
-          onPress={() => setShowAll(false)}
-          activeOpacity={0.6}
-        >
-          <Text style={styles.simpleLinkText}>Tampilkan Sedikit</Text>
-        </TouchableOpacity>
-      )}
-    </View>
+    <FlatList
+      ListHeaderComponent={
+        <View>
+          {ListHeaderComponent}
+          <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#222', marginBottom: 8, marginLeft: 2 }}>Sampah</Text>
+          <TouchableOpacity
+            style={{ alignSelf: 'flex-start', backgroundColor: '#E6F4EA', borderRadius: 16, paddingHorizontal: 16, paddingVertical: 6, marginBottom: 12, flexDirection: 'row', alignItems: 'center' }}
+            onPress={() => setDropdownVisible(true)}
+            activeOpacity={0.7}
+          >
+            <Text style={{ color: '#295C3D', fontWeight: 'bold', fontSize: 16 }}>{selectedType}</Text>
+            <Feather name="chevron-down" size={18} color="#295C3D" style={{ marginLeft: 4 }} />
+          </TouchableOpacity>
+          <Modal
+            visible={dropdownVisible}
+            transparent
+            animationType="fade"
+            onRequestClose={() => setDropdownVisible(false)}
+          >
+            <Pressable style={styles.modalOverlay} onPress={() => setDropdownVisible(false)}>
+              <View style={styles.dropdownMenu}>
+                {GARBAGE_TYPES.map((type) => (
+                  <TouchableOpacity
+                    key={type}
+                    style={styles.dropdownItem}
+                    onPress={() => handleSelectType(type)}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={{ color: '#295C3D', fontSize: 16 }}>{type}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </Pressable>
+          </Modal>
+        </View>
+      }
+      data={displayData}
+      renderItem={({ item }) => <FeedCard {...item} />}
+      keyExtractor={(_, idx) => idx.toString()}
+      numColumns={2}
+      columnWrapperStyle={{ justifyContent: 'space-between' }}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: (showTampilkanSemuaButton || showTampilkanSedikitButton) ? 8 : 0, marginTop: 8 }}
+      ListFooterComponent={
+        <View>
+          {showTampilkanSemuaButton && (
+            <TouchableOpacity
+              style={styles.simpleLinkButton}
+              onPress={() => setShowAll(true)}
+              activeOpacity={0.6}
+            >
+              <Text style={styles.simpleLinkText}>Tampilkan Semua</Text>
+            </TouchableOpacity>
+          )}
+          {showTampilkanSedikitButton && (
+            <TouchableOpacity
+              style={styles.simpleLinkButton}
+              onPress={() => setShowAll(false)}
+              activeOpacity={0.6}
+            >
+              <Text style={styles.simpleLinkText}>Tampilkan Sedikit</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      }
+    />
   );
 };
 
