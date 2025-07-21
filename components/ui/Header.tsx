@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Ionicons, Feather } from '@expo/vector-icons';
+import Banner from './Banner';
 
 export default function Header() {
   return (
@@ -27,6 +28,7 @@ export default function Header() {
           <Feather name="filter" size={20} color="#295C3D" />
         </TouchableOpacity>
       </View>
+      <Banner />
     </View>
   );
 }
